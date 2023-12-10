@@ -1,0 +1,96 @@
+<div class="flex flex-col flex-auto min-w-0">
+
+    <!-- Main -->
+    <div class="flex-auto p-6 sm:p-10">
+
+        <!-- CONTENT GOES HERE -->
+        <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+
+            <form class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden" name="contextForm"
+                [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+                <p class="text-lg font-medium">Edició del tiquet</p>
+                <p class="text-secondary mb-6">
+                   Escriu el nom del client, i amb el botó "+", afegeix linies a la factura. 
+                </p>
+
+                <!-- Inline Email and Country/Region -->
+                <div class="flex flex-col items-start sm:flex-row mb-4">
+                    <mat-form-field class=" sm:mr-4 w-1/4">
+                        <input matInput placeholder="Client Name" formControlName="customer_name">
+                    </mat-form-field>
+                    <!-- <mat-form-field class="flex-auto">
+                        <input matInput placeholder="VAT ID" formControlName="vatId">
+                    </mat-form-field> -->
+                </div>
+                <table class='table-auto'>
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody formArrayName="order_items">
+
+                        <tr *ngFor="let item of order_items.controls; let i = index" [formGroupName]="i">
+
+                            <td>
+
+                                <mat-form-field class="flex-auto sm:mr-4">
+                                    <input matInput formControlName="concept">
+                                </mat-form-field>
+
+                            </td>
+                            <td>
+
+                                <mat-form-field class="flex-auto sm:mr-4">
+                                    <input matInput formControlName="quantity" (blur)="calculateTotal(i)">
+                                </mat-form-field>
+
+                            </td>
+                            <td>
+
+                                <mat-form-field class="flex-auto sm:mr-4">
+                                    <input matInput formControlName="price" (blur)="calculateTotal(i)">
+                                </mat-form-field>
+                            </td>
+                            <td>
+
+                                <mat-form-field class="flex-auto sm:mr-4">
+                                    <input matInput formControlName="total_item">
+                                </mat-form-field>
+                            </td>
+                            <td>
+
+                                <button mat-icon-button color="warn" (click)="removeItem(i)">
+                                    <mat-icon>Delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <!-- Add button aligned to the right -->
+                <div class="flex justify-end">
+                    <button class="ml-auto" mat-fab color="primary" type="button" (click)="addItem()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+
+                <div class="flex flex-col items-end">
+                    <mat-form-field class="flex-auto gap-6 w-72   sm:mr-4">
+                        <input matInput placeholder="Total import" formControlName="total" class="ml-auto w-10">
+                    </mat-form-field>
+                </div>
+
+                <div class="flex flex-col items-end">
+                    <button mat-raised-button color="primary" type="submit">Crear factura</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
