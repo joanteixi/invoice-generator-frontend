@@ -1,7 +1,7 @@
 export const environment = {
 
-    production: false,
-    api: 'http://localhost:5000/api'
+    production: true,
+    api: 'https://simple-invoice-be.azurewebsites.net/api'
 
 };
 
