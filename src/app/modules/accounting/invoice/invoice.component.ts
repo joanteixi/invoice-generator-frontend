@@ -76,6 +76,17 @@ export class InvoiceComponent {
     this._router.navigate([id], {relativeTo: this._activatedRoute});
   } 
 
+  deleteOrder(id): void {
+    this.apiService.deleteOrder(id).subscribe({
+      next: (response: any) => {
+        this.loadTable();
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+
 
 
 }

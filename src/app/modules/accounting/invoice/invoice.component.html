@@ -47,8 +47,11 @@
                                 <ng-container matColumnDef="actions">
 
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Created at </th>
-                                    <td mat-cell *matCellDef="let row"> <button mat-raised-button color="warn"
+                                    <td mat-cell *matCellDef="let row"> 
+                                        <button mat-raised-button color="success"
                                             (click)="openOrder(row.id)">Show</button>
+                                            <button mat-raised-button color="warn"
+                                            (click)="deleteOrder(row.id)">Delete</button>
                                     </td>
                                 </ng-container>
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -52,10 +52,7 @@ export class InvoiceDetailComponent {
               this.order = order;
               console.log(order)
               // Patch values to the form
-              this.invoiceForm.patchValue({
-                customer_name: order.customer_name,
-                // total: order.total
-              });
+              this.invoiceForm.patchValue(order);
 
               // Clear existing order items
               while (this.order_items.length !== 0) {
@@ -86,11 +83,13 @@ export class InvoiceDetailComponent {
 
   initForm() {
     this.invoiceForm = this.formBuilder.group({
+      id: [''],
       customer_name: ['', Validators.required],
       order_items: this.formBuilder.array([]),
       total: ['']
     });
   }
+
 
 
   addItem() {
@@ -137,6 +136,8 @@ export class InvoiceDetailComponent {
   // Function to handle form submission
   onSubmit() {
     console.log('enviant form')
+    console.log(this.invoiceForm.value)
+
     if (this.invoiceForm.valid) {
       // Process the form data
       this.apiService.createOrder(this.invoiceForm.value).subscribe((res) => {
@@ -150,4 +151,7 @@ export class InvoiceDetailComponent {
     }
   }
 
+  returnToList(): void {
+    this.router.navigate(['/accounting']);
+  }
 }

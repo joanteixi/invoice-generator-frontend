@@ -44,9 +44,21 @@ export class ApiService {
     );
   }
 
+  deleteOrder(id): Observable<{}> {
+    const url = `${this.api}/orders/${id}`;
+
+    return this.http.delete<any>(url).pipe(
+      map((res) => {
+        return res;
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
+  }
+  
   createOrder(order_data) {
     const url = `${this.api}/orders`;
-    console.log('hola')
     return this.http.post<any>(url, order_data).pipe(
       map((res) => {
         return res;

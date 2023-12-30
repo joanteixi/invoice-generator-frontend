@@ -4,10 +4,9 @@ import { OrderItemModel } from "./orderItem.model";
 
 export class OrderModel extends Serializable {
 
-    public order_id: string;
+    public id: string;
     public customer_name: string;
     public created_at: Date
-   
     public order_items: Array<OrderItemModel>;
 
     
