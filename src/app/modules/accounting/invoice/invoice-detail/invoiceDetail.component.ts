@@ -10,6 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'app/services/api.service';
 import { OrderModel } from 'app/models/order.model';
+import { ConceptModel } from 'app/models/concept.model';
 
 @Component({
   selector: 'app-invoice',
@@ -26,6 +27,7 @@ export class InvoiceDetailComponent {
   private _unsubscribeAll: Subject<any> = new Subject<any>();
   id: number;
   order: OrderModel;
+  concepts: ConceptModel[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,7 +39,8 @@ export class InvoiceDetailComponent {
 
   ngOnInit(): void {
     this.initForm()
-
+    this.getConcepts()
+    
     this.activatedRoute.paramMap
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((ParamMap) => {
@@ -73,8 +76,6 @@ export class InvoiceDetailComponent {
             })
         }
       })
-
-
   }
 
   get order_items() {
@@ -107,6 +108,16 @@ export class InvoiceDetailComponent {
     this.order_items.removeAt(index);
   }
 
+  // on concept change,update price
+  onConceptChange(event, index: number) {
+    const itemFormGroup = this.order_items.at(index) as FormGroup;
+    const concept = itemFormGroup.get('concept').value;
+
+    const conceptSelected = this.concepts.find((c) => c.id == concept);
+    itemFormGroup.get('price').setValue(conceptSelected.base_price);
+  }
+
+
   calculateTotal(index: number) {
     const itemFormGroup = this.order_items.at(index) as FormGroup;
     const quantity = itemFormGroup.get('quantity').value;
@@ -135,7 +146,6 @@ export class InvoiceDetailComponent {
 
   // Function to handle form submission
   onSubmit() {
-    console.log('enviant form')
     console.log(this.invoiceForm.value)
 
     if (this.invoiceForm.valid) {
@@ -144,12 +154,18 @@ export class InvoiceDetailComponent {
         console.log(res)
         this.router.navigate(['/accounting'])
       })
-
     } else {
       // Handle validation errors
       console.log('Form is invalid');
     }
   }
+
+  getConcepts() {
+    this.apiService.getConcepts().subscribe((concepts: ConceptModel[]) => {
+      this.concepts = concepts
+    });
+  }
+
 
   returnToList(): void {
     this.router.navigate(['/accounting']);

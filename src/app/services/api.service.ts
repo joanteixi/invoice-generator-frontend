@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from 'environments/environment.development';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { OrderModel } from 'app/models/order.model';
+import { ConceptModel } from 'app/models/concept.model';
 
 @Injectable({
   providedIn: 'root'
@@ -56,7 +57,7 @@ export class ApiService {
       })
     );
   }
-  
+
   createOrder(order_data) {
     const url = `${this.api}/orders`;
     return this.http.post<any>(url, order_data).pipe(
@@ -68,8 +69,20 @@ export class ApiService {
         return this.handleError(err);
       })
     );
+  }
 
+  getConcepts(): Observable<{}> {
+    const url = `${this.api}/concepts`;
 
+    return this.http.get<any>(url).pipe(
+      map((res) => {
+        const concept = ConceptModel.createArray(res, new ConceptModel());
+        return concept;
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
   }
 
   handleError(error) {
