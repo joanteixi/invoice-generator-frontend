@@ -109,10 +109,21 @@
 
                 <div class="flex flex-col items-end">
                     <mat-form-field class="flex-auto gap-6 w-72   sm:mr-4">
-                        <input matInput placeholder="Total import" formControlName="total" class="ml-auto w-10">
+                        <input matInput placeholder="Total" formControlName="total_base" class="ml-auto w-10">
                     </mat-form-field>
                 </div>
 
+                <div class="flex flex-col">
+                    <mat-form-field class="flex ml-2">
+                        <mat-select placeholder="Payment Types" formControlName="payment_type_id">
+
+                            <mat-option *ngFor="let payment_type of payment_types" [value]="payment_type.id">
+                                {{payment_type.payment_type}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
                 <div class="flex flex-col items-end">
                     <button mat-raised-button color="primary" type="submit">Crear factura</button>
                     <button (click)="returnToList()" color="primary" type="submit">Tornar</button>

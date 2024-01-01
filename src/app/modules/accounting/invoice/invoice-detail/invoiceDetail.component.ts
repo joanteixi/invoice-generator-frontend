@@ -11,6 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ApiService } from 'app/services/api.service';
 import { OrderModel } from 'app/models/order.model';
 import { ConceptModel } from 'app/models/concept.model';
+import { PaymentTypeModel } from 'app/models/payment_type.model';
 
 @Component({
   selector: 'app-invoice',
@@ -28,6 +29,7 @@ export class InvoiceDetailComponent {
   id: number;
   order: OrderModel;
   concepts: ConceptModel[];
+  payment_types: PaymentTypeModel[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -39,7 +41,7 @@ export class InvoiceDetailComponent {
 
   ngOnInit(): void {
     this.initForm()
-    this.getConcepts()
+    this.getData()
     
     this.activatedRoute.paramMap
       .pipe(takeUntil(this._unsubscribeAll))
@@ -67,7 +69,7 @@ export class InvoiceDetailComponent {
                 this.addItem();
                 const itemFormGroup = this.order_items.at(this.order_items.length - 1) as FormGroup;
                 itemFormGroup.patchValue({
-                  concept: item.concept,
+                  concept: item.concept_id,
                   quantity: item.quantity,
                   price: item.price,
                   total_item: item.quantity * item.price
@@ -87,7 +89,8 @@ export class InvoiceDetailComponent {
       id: [''],
       customer_name: ['', Validators.required],
       order_items: this.formBuilder.array([]),
-      total: ['']
+      payment_type_id: ['', Validators.required],
+      total_base: ['', Validators.required]
     });
   }
 
@@ -128,7 +131,7 @@ export class InvoiceDetailComponent {
     itemFormGroup.get('total_item').setValue(total_item);
 
     //calculate total
-    const totalFormGroup = this.invoiceForm.get('total') as FormControl;
+    const totalFormGroup = this.invoiceForm.get('total_base') as FormControl;
     const items = this.invoiceForm.get('order_items') as FormArray;
     let total = 0;
 
@@ -160,9 +163,13 @@ export class InvoiceDetailComponent {
     }
   }
 
-  getConcepts() {
+  getData() {
     this.apiService.getConcepts().subscribe((concepts: ConceptModel[]) => {
       this.concepts = concepts
+    });  
+    
+    this.apiService.getPaymentTypes().subscribe((payment_types: PaymentTypeModel[]) => {
+      this.payment_types = payment_types
     });
   }
 

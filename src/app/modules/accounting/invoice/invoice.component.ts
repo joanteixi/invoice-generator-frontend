@@ -73,7 +73,7 @@ export class InvoiceComponent {
   }
 
   openOrder(id): void {
-    this._router.navigate([id], {relativeTo: this._activatedRoute});
+    this._router.navigate(['view/' +id], {relativeTo: this._activatedRoute});
   } 
 
   deleteOrder(id): void {

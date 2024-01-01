@@ -4,7 +4,7 @@ import { Serializable } from "app/models/serializable.model";
 export class OrderItemModel extends Serializable {
 
     public order_item_id: string;
-    public concept: string;
+    public concept_id: number;
     public quantity: number;
     public price: number;
    

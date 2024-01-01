@@ -5,6 +5,7 @@ import { environment } from 'environments/environment.development';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { OrderModel } from 'app/models/order.model';
 import { ConceptModel } from 'app/models/concept.model';
+import { PaymentTypeModel } from 'app/models/payment_type.model';
 
 @Injectable({
   providedIn: 'root'
@@ -84,6 +85,20 @@ export class ApiService {
       })
     );
   }
+
+  getPaymentTypes(): Observable<{}> {
+    const url = `${this.api}/payment_types`;
+
+    return this.http.get<any>(url).pipe(
+      map((res) => {
+        return PaymentTypeModel.createArray(res, new PaymentTypeModel());
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
+  }
+
 
   handleError(error) {
     console.log('error in service')

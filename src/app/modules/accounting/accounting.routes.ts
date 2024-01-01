@@ -1,6 +1,7 @@
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@angular/router';
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoiceDetail.component';
 import { InvoiceComponent } from './invoice/invoice.component';
+import { invoiceViewComponent } from './invoice/invoice-view/invoiceView.component';
 
 
 const canDeactivateContactsDetails = (
@@ -39,7 +40,11 @@ export default [
     },
 
     {
-        path: ':id',
+        path: 'edit/:id',
         component: InvoiceDetailComponent,
+    }, 
+    {
+        path: 'view/:id',
+        component: invoiceViewComponent
     }
 ] as Routes;

@@ -8,10 +8,11 @@ export class OrderModel extends Serializable {
     public customer_name: string;
     public created_at: Date
     public order_items: Array<OrderItemModel>;
+    public payment_type_id: number;
+    public total_base: number;
 
-    
     newModel(data: any): OrderModel {
-        const dataParsed = new OrderModel(data);       
+        const dataParsed = new OrderModel(data);
         return dataParsed;
     }
 
