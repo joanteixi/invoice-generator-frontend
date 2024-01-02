@@ -22,6 +22,7 @@ export class AuthUtils
         // Return if there is no token
         if ( !token || token === '' )
         {
+            console.log('no token')
             return true;
         }
 
@@ -32,11 +33,12 @@ export class AuthUtils
 
         if ( date === null )
         {
-            return true;
+            console.log('no data')
+            // return true;
         }
 
         // Check if the token is expired
-        return !(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000);
+        // return !(date.valueOf() > new Date().valueOf() + offsetSeconds * 1000);
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -154,7 +156,6 @@ export class AuthUtils
 
         // Split the token
         const parts = token.split('.');
-
         if ( parts.length !== 3 )
         {
             throw new Error('The inspected token doesn\'t appear to be a JWT. Check to make sure it has three parts and see https://jwt.io for more.');
@@ -181,7 +182,6 @@ export class AuthUtils
     {
         // Get the decoded token
         const decodedToken = this._decodeToken(token);
-
         // Return if the decodedToken doesn't have an 'exp' field
         if ( !decodedToken.hasOwnProperty('exp') )
         {

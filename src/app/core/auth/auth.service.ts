@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { AuthUtils } from 'app/core/auth/auth.utils';
 import { UserService } from 'app/core/user/user.service';
+import { environment } from 'environments/environment.development';
 import { catchError, Observable, of, switchMap, throwError } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
@@ -10,6 +11,7 @@ export class AuthService
     private _authenticated: boolean = false;
     private _httpClient = inject(HttpClient);
     private _userService = inject(UserService);
+    private _api: string = environment.api;
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -65,11 +67,11 @@ export class AuthService
             return throwError('User is already logged in.');
         }
 
-        return this._httpClient.post('api/auth/sign-in', credentials).pipe(
+        return this._httpClient.post(`${this._api}/user/login`, credentials).pipe(
             switchMap((response: any) =>
             {
                 // Store the access token in the local storage
-                this.accessToken = response.accessToken;
+                this.accessToken = response.access_token;
 
                 // Set the authenticated flag to true
                 this._authenticated = true;
@@ -88,8 +90,9 @@ export class AuthService
      */
     signInUsingToken(): Observable<any>
     {
+        console.log('signinUsingToken')
         // Sign in using the token
-        return this._httpClient.post('api/auth/sign-in-with-token', {
+        return this._httpClient.post(`${this._api}/user/sign-in-with-token`, {
             accessToken: this.accessToken,
         }).pipe(
             catchError(() =>
@@ -106,9 +109,9 @@ export class AuthService
                 // in using the token, you should generate a new one on the server
                 // side and attach it to the response object. Then the following
                 // piece of code can replace the token with the refreshed one.
-                if ( response.accessToken )
+                if ( response.access_token )
                 {
-                    this.accessToken = response.accessToken;
+                    this.accessToken = response.access_token;
                 }
 
                 // Set the authenticated flag to true
@@ -175,6 +178,7 @@ export class AuthService
             return of(false);
         }
 
+    
         // Check the access token expire date
         if ( AuthUtils.isTokenExpired(this.accessToken) )
         {

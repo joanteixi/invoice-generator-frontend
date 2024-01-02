@@ -10,12 +10,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { ApiService } from 'app/services/api.service';
 import { ActivatedRoute, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { fuseAnimations } from '@fuse/animations';
 
 @Component({
   selector: 'app-invoice',
   standalone: true,
   templateUrl: './invoice.component.html',
+  styleUrl: './invoice.component.scss',
   encapsulation: ViewEncapsulation.None,
+  animations     : fuseAnimations,
   imports: [CommonModule, ReactiveFormsModule, MatSortModule, MatFormFieldModule, MatTableModule, MatButtonModule, ReactiveFormsModule, MatInputModule, MatIconModule, MatSelectModule]
 
 })
@@ -30,7 +33,7 @@ export class InvoiceComponent {
   results: any[];
   displayedColumns = ['id', 'customer_name', 'created_at', 'actions']
   dataSource: MatTableDataSource<any>;
-  loading = false;
+  isLoading = false;
 
   constructor(
     private apiService: ApiService,

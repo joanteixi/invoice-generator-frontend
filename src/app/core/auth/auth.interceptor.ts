@@ -39,6 +39,7 @@ export const authInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn):
             // Catch "401 Unauthorized" responses
             if ( error instanceof HttpErrorResponse && error.status === 401 )
             {
+                console.log('auth.intercerptop logout')
                 // Sign out
                 authService.signOut();
 
