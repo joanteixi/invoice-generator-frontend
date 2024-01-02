@@ -41,12 +41,15 @@ export class InvoiceDetailComponent {
 
   ngOnInit(): void {
     this.initForm()
+    
     this.getData()
     
     this.activatedRoute.paramMap
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((ParamMap) => {
         if (ParamMap.get('id') == 'new') {
+          this.addItem();
+
         } else {
           this.id = +ParamMap.get('id');
           // load context data

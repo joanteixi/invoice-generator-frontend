@@ -1,74 +1,114 @@
-<div class="p-8">
-    <div class="bg-white p-8 rounded shadow-md">
-        <header>
-            <h1>Invoice</h1>
-            <address >
-                <p>Puceduca</p>
-                <p>Carretera d'Olesa, 43, 08390 Vacarisses</p>
-                <p>622 XX xx XX</p>
-            </address>
-            <span><img alt="" src="https://www.puceduca.cat/wp-content/uploads/2022/07/logopuced.png"
-                    style="width:100px">
-            </span>
-        </header>
-        <article>
-            <h1>Recipient</h1>
-            <address>
-                <p>Client: {{order.customer_name}}</p>
-            </address>
-            <table class="meta">
-                <tr>
-                    <th><span >Número de factura #</span></th>
-                    <td><span >{{order.id}}</span></td>
-                </tr>
-                <tr>
-                    <th><span >Data</span></th>
-                    <td><span >{{order.created_at}}</span></td>
-                </tr>
-                <tr>
-                    <th><span >Amount Due</span></th>
-                    <td><span>{{order.total_base}}</span><span id="prefix" >€</span></td>
-                </tr>
-            </table>
-            <table class="inventory">
-                <thead>
-                    <tr>
-                        <th><span >Item</span></th>
-                        <th><span >Price</span></th>
-                        <th><span >Quantity</span></th>
-                        <th><span >Total</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr  *ngFor="let item of order.order_items; let i = index" >
-                        <td><span >{{item.concept}}</span></td>
-                        <td><span data-prefix>$</span><span >{{item.price}}</span></td>
-                        <td><span >4</span></td>
-                        <td><span data-prefix>€</span><span>{{item.total}}</span></td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="balance">
-                <tr>
-                    <th><span >Total</span></th>
-                    <td><span>{{order.total_base}}</span><span data-prefix>$</span></td>
-                </tr>
-               
-            </table>
-        </article>
-        <aside>
-            <h1><span >Additional Notes</span></h1>
-            <div >
-                <p>A finance charge of 1.5% will be made on unpaid balances after 30 days.</p>
-            </div>
-        </aside>
+<div class="absolute inset-0 min-w-0 text-center overflow-auto print:overflow-visible" cdkScrollable>
+    
+    <!-- Header -->
+    <div
+        class="no-print relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        <!-- Loader -->
+
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">Versió per imprimir</div>
+        <!-- Actions -->
+        <div class="no-print flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+
+            <!-- Add product button -->
+            <button class="no-print ml-4" mat-flat-button [color]="'primary'" (click)="printInvoice()">
+                <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+                <span class="ml-2 mr-1">Imprimir</span>
+            </button>
+            <button class="no-print ml-4" mat-flat-button [color]="'warn'" (click)="editInvoice()">
+                <mat-icon [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
+                <span class="ml-2 mr-1">Editar rebut</span>
+            </button>
+            <button class="no-print ml-4" mat-flat-button [color]="'accent'" (click)="returnToList()">
+                <mat-icon [svgIcon]="'heroicons_outline:list-bullet'"></mat-icon>
+                <span class="ml-2 mr-1">Tornar</span>
+            </button>
+           
+        </div>
     </div>
-</div>
+
+    <!-- Main -->
+    <div class="inline-block p-6 sm:p-10 text-left print:p-0">
+
+        <!-- Invoice -->
+        <div
+            class="w-240 p-16 rounded-2xl shadow bg-card print:w-auto print:rounded-none print:shadow-none print:bg-transparent">
+
+            <div class="flex items-start justify-between">
+                <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+                    <div class="text-4xl tracking-tight text-secondary">REBUT</div>
+                    <div class="text-4xl">#{{order.id}}</div>
+                    <div class="font-medium tracking-tight text-secondary">DATA</div>
+                    <div class="font-medium">{{order.created_at|date:'dd/MM/yyyy'}}</div>
+
+                    <div class="font-medium tracking-tight text-secondary">TOTAL IMPORT</div>
+                    <div class="font-medium">{{ order.total_base | currency: 'EUR'}}</div>
+                </div>
+                <div class="grid auto-cols-max grid-flow-col gap-x-8 -mr-16 py-6 px-8 rounded-l-2xl bg-accent dark">
+                    <div class="place-self-center w-24">
+                        <img class="w-24" src="https://www.puceduca.cat/wp-content/uploads/2022/07/logopuced.png">
+                    </div>
+                    <div class="pl-10 border-l text-md">
+                        <div class="font-medium">Puceduca</div>
+                        <div>Carrer Major, 72</div>
+                        <div>Vacarisses, 08233</div>
+                        <div>622XXXXXX</div>
+                        <div>puceduca.cat</div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-md">
+                <div class="text-xl font-medium">{{order.customer_name}}</div>
+                <!-- <div>9301 Wood Street Philadelphia, PA 19111</div>
+                <div>hughes.briancompany.com</div>
+                <div>+55 552 455 87</div> -->
+            </div>
+
+            <div class="grid grid-cols-12 gap-x-1 mt-12">
+                <!-- Columns -->
+                <div class="col-span-6 font-medium text-md text-secondary">CONCEPTE</div>
+                <div class="col-span-2 font-medium text-md text-right text-secondary">PREU UNITAT</div>
+                <div class="col-span-2 font-medium text-md text-right text-secondary">QUANTITAT</div>
+                <div class="col-span-2 font-medium text-md text-right text-secondary">TOTAL</div>
+
+                <!-- Divider -->
+                <div class="col-span-12 my-4 border-b"></div>
+
+                <!-- Item -->
+                <ng-container *ngFor="let item of order.order_items; let i = index">
+
+                    <div class="col-span-6 text-lg font-medium">{{item.concept}}</div>
+                    <div class="col-span-2 self-center text-right">{{item.price | currency: 'EUR'}}</div>
+                    <div class="col-span-2 self-center text-right">{{item.quantity}}</div>
+                    <div class="col-span-2 self-center text-right">{{item.total_item | currency: 'EUR'}}</div>
+
+                    <!-- Divider -->
+                    <div class="col-span-12 my-4 border-b"></div>
+                </ng-container>
 
 
-<div class="no-print">
+            </div>
 
-    <button (click)="printInvoice()">Print Invoice</button>
-    <button (click)="editInvoice()">Edit Invoice</button>
-    <button (click)="returnToList()">Return</button>
+            <div class="mt-16">
+                <div class="font-medium">Please pay within 15 days. Thank you for your business.</div>
+                <div class="flex items-start mt-4">
+                    <img class="flex-0 w-10 mt-2" src="assets/images/logo/logo.svg">
+                    <div class="ml-6 text-sm text-secondary">
+                        In condimentum malesuada efficitur. Mauris volutpat placerat auctor. Ut ac congue dolor. Quisque
+                        scelerisque lacus sed feugiat fermentum.
+                        Cras aliquet facilisis pellentesque. Nunc hendrerit quam at leo commodo, a suscipit tellus
+                        dapibus. Etiam at felis volutpat est mollis lacinia.
+                        Mauris placerat sem sit amet velit mollis, in porttitor ex finibus. Proin eu nibh id libero
+                        tincidunt lacinia et eget.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
 </div>
