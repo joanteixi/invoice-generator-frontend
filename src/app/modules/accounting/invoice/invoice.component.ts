@@ -64,7 +64,7 @@ export class InvoiceComponent {
   }
 
   newInvoice(): void {
-    this._router.navigate(['new'], {relativeTo: this._activatedRoute});
+    this._router.navigate(['edit/new'], {relativeTo: this._activatedRoute});
   }
 
   renderTable(): void {
