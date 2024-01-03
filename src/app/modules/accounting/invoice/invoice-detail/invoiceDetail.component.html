@@ -1,7 +1,20 @@
-<div class="flex flex-col flex-auto min-w-0">
+<div class="absolute inset-0 min-w-0 text-center overflow-auto print:overflow-visible" cdkScrollable>
+    <!-- Header -->
+    <div
+        class=" relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        <!-- Title -->
+        <div class="text-4xl font-extrabold tracking-tight">Creació/edició rebut</div>
+        <!-- Actions -->
+        <div class="flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+
+            <!-- Add product button -->
+
+
+        </div>
+    </div>
 
     <!-- Main -->
-    <div class="flex-auto p-6 sm:p-10">
+    <div class="inline-block p-6 sm:p-10 text-left">
 
         <!-- CONTENT GOES HERE -->
         <div class="h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
@@ -15,103 +28,83 @@
 
                 <!-- Inline Email and Country/Region -->
                 <div class="flex flex-col items-start sm:flex-row mb-4">
-                    <mat-form-field class=" sm:mr-4 w-1/4">
+                    <mat-form-field class=" sm:mr-4 w-1/2">
+                        <mat-label>Client Name</mat-label>
+
                         <input matInput placeholder="Client Name" formControlName="customer_name">
                     </mat-form-field>
                     <!-- <mat-form-field class="flex-auto">
                         <input matInput placeholder="VAT ID" formControlName="vatId">
                     </mat-form-field> -->
                 </div>
-                <div class="not-prose relative bg-slate-50 rounded-xl overflow-hidden dark:bg-slate-800/25">
-                    <div
-                        class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]">
-                    </div>
-                    <div class="relative rounded-xl overflow-auto">
-
-                        <div class="shadow-sm overflow-hidden my-8">
 
 
-                            <table class='table-auto w-full border-gray-100 '>
-                                <thead>
-                                    <tr class="contet-left mb-5">
-                                        <th
-                                            class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Concept</th>
-                                        <th
-                                            class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Quantity</th>
-                                        <th
-                                            class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Price</th>
-                                        <th
-                                            class="border-b dark:border-slate-600 font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">
-                                            Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
+                <!-- Add button aligned to the right -->
 
-                                <tbody class="bg-white dark:bg-slate-800" formArrayName="order_items">
+                <div class="inline-block p-4 sm:p-4 text-left">
 
-                                    <tr  *ngFor="let item of order_items.controls; let i = index" [formGroupName]="i">
+                    <div class="grid grid-cols-12 gap-x-1 mt-12">
+                        <!-- Columns -->
+                        <div class="col-span-4 font-medium text-md text-secondary">CONCEPTE</div>
+                        <div class="col-span-2 font-medium text-md text-right text-secondary">PREU UNITAT</div>
+                        <div class="col-span-2 font-medium text-md text-right text-secondary">QUANTITAT</div>
+                        <div class="col-span-2 font-medium text-md text-right text-secondary">TOTAL</div>
+                        <div class="col-span-2 font-medium text-md text-right text-secondary">ACTION</div>
 
-                                        <td class="pt-2">
-                                            <mat-form-field class="flex ml-2">
-                                                <mat-select placeholder="Concept" formControlName="concept"
-                                                    (ngModelChange)="onConceptChange($event, i)">
+                        <!-- Divider -->
+                        <div class="col-span-12 my-4 border-b"></div>
 
-                                                    <mat-option *ngFor="let concept of concepts" [value]="concept.id">
-                                                        {{concept.name}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
+                        <!-- Item -->
+                        <ng-container formArrayName="order_items">
+                            <ng-container *ngFor="let item of order_items.controls; let i = index" [formGroupName]="i">
+                                <div class="col-span-4 font-medium">
+                                    <mat-form-field class="flex ml-2">
+                                        <mat-select placeholder="Concept" formControlName="concept"
+                                            (ngModelChange)="onConceptChange($event, i)">
 
-                                        </td>
-                                        <td class="pt-2">
+                                            <mat-option *ngFor="let concept of concepts" [value]="concept.id">
+                                                {{concept.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-2 self-center text-right">
+                                    <mat-form-field class="flex ml-2">
+                                        <input matInput formControlName="quantity" (blur)="calculateTotal(i)">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-2 self-center text-right">
+                                    <mat-form-field class="flex ml-2 ">
+                                        <input class="highlight_input" matInput formControlName="price"
+                                            (blur)="calculateTotal(i)">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-2 self-center text-right">
+                                    <mat-form-field class="flex ml-2">
+                                        <input matInput formControlName="total_item">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-span-2 self-center text-right">
+                                    <button mat-icon-button color="warn" (click)="removeItem(i)">
+                                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                                    </button>
+                                </div>
 
-                                            <mat-form-field class="flex ml-2">
-                                                <input matInput formControlName="quantity" (blur)="calculateTotal(i)">
-                                            </mat-form-field>
+                                <!-- Divider -->
+                                <div class="col-span-12 my-4 border-b"></div>
+                            </ng-container>
 
-                                        </td>
-                                        <td class="pt-2">
+                        </ng-container>
+                        <div class="col-span-10 text-right">
+                            <mat-form-field class="">
+                                <mat-label>Import total</mat-label>
 
-                                            <mat-form-field class="flex ml-2 ">
-                                                <input class="highlight_input" matInput formControlName="price"
-                                                    (blur)="calculateTotal(i)">
-                                            </mat-form-field>
-                                        </td>
-                                        <td class="pt-2">
-
-                                            <mat-form-field class="flex ml-2">
-                                                <input matInput formControlName="total_item">
-                                            </mat-form-field>
-                                        </td>
-                                        <td class="pt-2">
-
-                                            <button mat-icon-button color="warn" (click)="removeItem(i)">
-                                                <mat-icon>Delete</mat-icon>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <input matInput placeholder="Total" formControlName="total_base" class="ml-auto">
+                            </mat-form-field>
                         </div>
                     </div>
                 </div>
 
-
-                <!-- Add button aligned to the right -->
-                <div class="flex justify-end">
-                    <button class="ml-auto" mat-fab color="primary" type="button" (click)="addItem()">
-                        <mat-icon>add</mat-icon>
-                    </button>
-                </div>
-
-                <div class="flex flex-col items-end">
-                    <mat-form-field class="flex-auto gap-6 w-72   sm:mr-4">
-                        <input matInput placeholder="Total" formControlName="total_base" class="ml-auto w-10">
-                    </mat-form-field>
-                </div>
 
                 <div class="flex flex-col">
                     <mat-form-field class="flex ml-2">
@@ -128,6 +121,7 @@
                     <button mat-raised-button color="primary" type="submit">Crear factura</button>
                     <button (click)="returnToList()" color="primary" type="submit">Tornar</button>
                 </div>
+
             </form>
         </div>
     </div>
