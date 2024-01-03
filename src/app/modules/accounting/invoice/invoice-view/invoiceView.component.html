@@ -15,9 +15,13 @@
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
                 <span class="ml-2 mr-1">Imprimir</span>
             </button>
-            <button class="no-print ml-4" mat-flat-button [color]="'warn'" (click)="editInvoice()">
+            <button class="no-print ml-4" mat-flat-button [color]="'primary'" (click)="editInvoice()">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
                 <span class="ml-2 mr-1">Editar rebut</span>
+            </button>
+            <button class="no-print ml-4" mat-flat-button [color]="'warn'" (click)="deleteOrder()">
+                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                <span class="ml-2 mr-1">Esborrar</span>
             </button>
             <button class="no-print ml-4" mat-flat-button [color]="'accent'" (click)="returnToList()">
                 <mat-icon [svgIcon]="'heroicons_outline:list-bullet'"></mat-icon>

@@ -88,4 +88,15 @@ export class invoiceViewComponent {
   returnToList(): void {
     this.router.navigate(['/accounting']);
   }
+  
+  deleteOrder(): void {
+    this.apiService.deleteOrder(this.id).subscribe({
+      next: (response: any) => {
+        this.router.navigate(['/accounting']);
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
 }

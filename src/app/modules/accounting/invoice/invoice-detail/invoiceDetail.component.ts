@@ -121,6 +121,7 @@ export class InvoiceDetailComponent {
 
     const conceptSelected = this.concepts.find((c) => c.id == concept);
     itemFormGroup.get('price').setValue(conceptSelected.base_price);
+    this.calculateTotal(index)
   }
 
 
@@ -180,4 +181,7 @@ export class InvoiceDetailComponent {
   returnToList(): void {
     this.router.navigate(['/accounting']);
   }
+
+  
+
 }
