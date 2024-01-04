@@ -49,15 +49,15 @@
                 </div>
                 <!-- Add button aligned to the right -->
 
-                <div class="inline-block p-4 sm:p-4 text-left">
+                <div class="p-4 sm:p-4 text-left">
 
-                    <div class="grid grid-cols-12 gap-x-1 mt-2">
+                    <div class="grid grid-cols-12 md:grip-cols-12 gap-x-1 mt-2">
                         <!-- Columns -->
-                        <div class="col-span-5 font-medium text-md text-secondary">CONCEPTE</div>
-                        <div class="col-span-2 font-medium text-md text-center text-secondary">PREU UNITAT</div>
-                        <div class="col-span-2 font-medium text-md text-center text-secondary">QUANTITAT</div>
-                        <div class="col-span-2 font-medium text-md text-center text-secondary">TOTAL</div>
-                        <div class="col-span-1 font-medium text-md text-center text-secondary">ACTION</div>
+                        <div class="hidden md:block md:col-span-5 col-span-12 font-medium text-md text-secondary">CONCEPTE</div>
+                        <div class="hidden md:block md:col-span-2 col-span-6 font-medium text-md md:text-center text-secondary">PREU UNITAT</div>
+                        <div class="hidden md:block md:col-span-2 col-span-6 font-medium text-md md:text-center text-secondary">QUANTITAT</div>
+                        <div class="hidden md:block md:col-span-2 col-span-12 font-medium text-md md:text-center text-secondary">TOTAL</div>
+                        <div class="hidden md:block md:col-span-1 col-span-12 font-medium text-md md:text-center text-secondary">ACTION</div>
 
                         <!-- Divider -->
                         <div class="col-span-12 my-3 border-b"></div>
@@ -65,7 +65,10 @@
                         <!-- Item -->
                         <ng-container formArrayName="order_items">
                             <ng-container *ngFor="let item of order_items.controls; let i = index" [formGroupName]="i">
-                                <div class="col-span-5 font-medium">
+                                <div class="col-span-12 md:col-span-5 font-medium">
+                                    <div class="ml-1 mb-2 md:hidden text-left">
+                                        Concepte
+                                    </div>
                                     <mat-form-field class="flex ml-2">
                                         <mat-select placeholder="Concept" formControlName="concept"
                                             (ngModelChange)="onConceptChange($event, i)">
@@ -76,30 +79,39 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-span-2 self-center text-right">
+                                <div class="col-span-6 md:col-span-2 self-center text-right">
+                                    <div class="ml-1 mb-2 md:hidden text-left">
+                                        Quantity
+                                    </div>
                                     <mat-form-field class="flex ml-2">
                                         <input matInput formControlName="quantity" (blur)="calculateTotal(i)">
                                     </mat-form-field>
                                 </div>
-                                <div class="col-span-2 self-center text-right">
+                                <div class="col-span-6 md:col-span-2 self-center text-right">
+                                    <div class="ml-1  mb-2 md:hidden text-left">
+                                        Price
+                                    </div>
                                     <mat-form-field class="flex ml-2 ">
                                         <input class="highlight_input" matInput formControlName="price"
                                             (blur)="calculateTotal(i)">
                                     </mat-form-field>
                                 </div>
-                                <div class="col-span-2 self-center text-right">
+                                <div class="col-span-12 md:col-span-2 self-center text-right">
+                                    <div class="ml-1 mb-2 md:hidden text-left">
+                                        Total
+                                    </div>
                                     <mat-form-field class="flex ml-2">
                                         <input matInput formControlName="total_item">
                                     </mat-form-field>
                                 </div>
-                                <div class="col-span-1 self-auto ">
+                                <div class="col-span-12 md:col-span-1 self-auto ">
                                     <button mat-icon-button color="warn" (click)="removeItem(i)">
                                         <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                                     </button>
                                 </div>
 
                                 <!-- Divider -->
-                                <div class="col-span-12 my-4 border-b"></div>
+                                <div class="col-span-1 md:col-span-12 my-4 border-b"></div>
                             </ng-container>
 
                         </ng-container>
