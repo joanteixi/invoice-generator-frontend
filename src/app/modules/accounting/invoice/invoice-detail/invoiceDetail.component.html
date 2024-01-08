@@ -1,7 +1,7 @@
 <div class="absolute inset-0 min-w-0 text-center overflow-auto print:overflow-visible" cdkScrollable>
     <!-- Header -->
     <div
-        class=" relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-8 border-b">
+        class=" relative flex flex-col sm:flex-row flex-0 sm:items-center sm:justify-between py-8 px-6 md:px-3 md:py-3 border-b">
         <!-- Title -->
         <div class="text-4xl font-extrabold tracking-tight">Creació/edició rebut</div>
         <!-- Actions -->
@@ -14,10 +14,10 @@
     </div>
 
     <!-- Main -->
-    <div class="inline-block p-6 sm:p-10 text-left">
+    <div class="inline-block p-4 sm:p-4 text-left">
 
         <!-- CONTENT GOES HERE -->
-        <div class="relative h-400 min-h-400 max-h-400 border-2 border-dashed border-gray-300 rounded-2xl">
+        <div class="relative h-400 min-h-400 max-h-400  border-gray-300 rounded-2xl">
 
             <form class="flex flex-col mt-4 px-8 pt-10 bg-card shadow rounded overflow-hidden" name="contextForm"
                 [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
@@ -28,7 +28,7 @@
 
                 <!-- Inline Email and Country/Region -->
                 <div class="flex flex-col items-start sm:flex-row mb-1">
-                    <mat-form-field class=" sm:mr-4 w-1/2">
+                    <mat-form-field class=" sm:mr-4 w-10/12">
                         <mat-label>Client Name</mat-label>
 
                         <input matInput placeholder="Client Name" formControlName="customer_name">
