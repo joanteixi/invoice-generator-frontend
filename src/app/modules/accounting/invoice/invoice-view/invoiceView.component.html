@@ -8,38 +8,42 @@
         <!-- Title -->
         <div class="text-4xl font-extrabold tracking-tight">Versió per imprimir</div>
         <!-- Actions -->
-        <div class="no-print flex shrink-0 items-center mt-6 sm:mt-0 sm:ml-4">
+        <div class="no-print grid grid-cols-2 gap-x-3 md:grid-cols-4 mt-6 sm:mt-0 sm:ml-4">
 
             <!-- Add product button -->
-            <button class="no-print ml-4" mat-flat-button [color]="'primary'" (click)="printInvoice()">
+            <button class="no-print grid-cols-1 mb-2 md:mb-0" mat-flat-button [color]="'primary'"
+                (click)="printInvoice()">
                 <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                <span class="ml-2 mr-1">Imprimir</span>
+                <span class="">Imprimir</span>
             </button>
-            <button class="no-print ml-4" mat-flat-button [color]="'primary'" (click)="editInvoice()">
+            <button class="no-print  grid-cols-1 mb-2 md:mb-0" mat-flat-button [color]="'primary'"
+                (click)="editInvoice()">
                 <mat-icon [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
-                <span class="ml-2 mr-1">Editar rebut</span>
+                <span class="">Editar</span>
             </button>
-            <button class="no-print ml-4" mat-flat-button [color]="'warn'" (click)="deleteOrder()">
-                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                <span class="ml-2 mr-1">Esborrar</span>
-            </button>
-            <button class="no-print ml-4" mat-flat-button [color]="'accent'" (click)="returnToList()">
+            <button class="no-print grid-cols-1 mb-2 md:mb-0" mat-flat-button [color]="'accent'"
+                (click)="returnToList()">
                 <mat-icon [svgIcon]="'heroicons_outline:list-bullet'"></mat-icon>
-                <span class="ml-2 mr-1">Tornar</span>
+                <span class="">Tornar</span>
             </button>
+            <button class="no-print grid-cols-1 mb-2 md:mb-0" mat-flat-button [color]="'warn'" (click)="deleteOrder()">
+                <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                <span class="">Esborrar</span>
+            </button>
+
 
         </div>
     </div>
 
     <!-- Main -->
-    <div class="inline-block p-6 sm:p-10 text-left print:p-0">
+    <div class="inline-block p-2 sm:p-10 text-left print:p-0">
 
         <!-- Invoice -->
         <div
-            class="w-240 p-16 rounded-2xl shadow bg-card print:w-auto print:rounded-none print:shadow-none print:bg-transparent">
+            class="w-auto md:w-240 p-2 md:p-16 rounded-2xl shadow bg-card print:w-auto print:rounded-none print:shadow-none print:bg-transparent">
 
             <div class="flex items-start justify-between">
-                <div class="grid grid-cols-2 gap-x-4 gap-y-1">
+                <div class="grid md:grid-cols-2 md:gap-x-4 md:gap-y-1">
                     <div class="text-4xl tracking-tight text-secondary">REBUT</div>
                     <div class="text-4xl">#{{order.id}}</div>
                     <div class="font-medium tracking-tight text-secondary">DATA</div>
@@ -48,15 +52,15 @@
                     <div class="font-medium tracking-tight text-secondary">TOTAL IMPORT</div>
                     <div class="font-medium">{{ order.total_base | currency: 'EUR'}}</div>
                 </div>
-                <div class="grid auto-cols-max grid-flow-col gap-x-8 -mr-16 py-6 px-8 rounded-l-2xl bg-accent dark">
+                <div class="grid md:auto-cols-max md:grid-flow-col md:gap-x-8 md:mr-16 py-6 px-8 rounded-l-2xl bg-accent dark">
                     <div class="place-self-center w-24">
                         <img class="w-24" src="https://www.puceduca.cat/wp-content/uploads/2022/07/logopuced.png">
                     </div>
                     <div class="pl-10 border-l text-md">
                         <div class="font-medium">Puceduca</div>
-                        <div>Carrer Major, 72</div>
+                        <div>Carretera d'Olesa, 11</div>
                         <div>Vacarisses, 08233</div>
-                        <div>622XXXXXX</div>
+                        <div>622 43 38 99</div>
                         <div>puceduca.cat</div>
 
                     </div>
@@ -64,13 +68,13 @@
             </div>
 
             <div class="text-md">
-                <div class="text-xl font-medium">{{order.customer_name}}</div>
+                <div class="text-xl font-medium">Client: {{order.customer_name}}</div>
                 <!-- <div>9301 Wood Street Philadelphia, PA 19111</div>
                 <div>hughes.briancompany.com</div>
                 <div>+55 552 455 87</div> -->
             </div>
 
-            <div class="grid grid-cols-12 gap-x-1 mt-12">
+            <div class="grid grid-cols-12 gap-x-1 mt-6 md:mt-12">
                 <!-- Columns -->
                 <div class="col-span-6 font-medium text-md text-secondary">CONCEPTE</div>
                 <div class="col-span-2 font-medium text-md text-right text-secondary">PREU UNITAT</div>
