@@ -9,7 +9,7 @@
 <mat-menu
     [xPosition]="'before'"
     #languages="matMenu">
-    <ng-container *ngFor="let lang of availableLangs; trackBy: trackByFn">
+    <!-- <ng-container *ngFor="let lang of availableLangs; trackBy: trackByFn">
         <button
             mat-menu-item
             (click)="setActiveLang(lang.id)">
@@ -18,7 +18,7 @@
                 <span class="ml-3">{{lang.label}}</span>
             </span>
         </button>
-    </ng-container>
+    </ng-container> -->
 </mat-menu>
 
 <!-- Flag image template -->
