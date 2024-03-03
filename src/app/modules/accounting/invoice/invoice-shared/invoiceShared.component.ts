@@ -27,7 +27,7 @@ export class invoiceSharedComponent {
   @ViewChild('pdfContent', { static: false }) pdfContent!: ElementRef;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  url_id: number;
+  url_id: string;
   order: OrderModel;
   order_items: OrderItemModel[] = [];
 
@@ -45,10 +45,9 @@ export class invoiceSharedComponent {
     this.activatedRoute.paramMap
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((ParamMap) => {
-
-        this.url_id = +ParamMap.get('url_id');
+        this.url_id = ParamMap.get('url_id');
+        console.log('url d', this.url_id)
         // load context data
-        console.log('id number is ' + this.url_id)
         this.apiService.getOrderByUrl(this.url_id)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe((order: OrderModel) => {
