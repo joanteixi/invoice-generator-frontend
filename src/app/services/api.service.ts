@@ -46,6 +46,20 @@ export class ApiService {
     );
   }
 
+  getOrderByUrl(url_id): Observable<{}> {
+    const url = `${this.api}/orders/shared_order/${url_id}`;
+
+    return this.http.get<any>(url).pipe(
+      map((res) => {
+        const order = new OrderModel().newModel(res);
+        return order;
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
+  }
+  
   deleteOrder(id): Observable<{}> {
     const url = `${this.api}/orders/${id}`;
 
@@ -92,6 +106,19 @@ export class ApiService {
     return this.http.get<any>(url).pipe(
       map((res) => {
         return PaymentTypeModel.createArray(res, new PaymentTypeModel());
+      }),
+      catchError((err) => {
+        return this.handleError(err);
+      })
+    );
+  }
+
+  sendWhatsapp(id): Observable<{}> {
+    const url = `${this.api}/orders/${id}/send_whatsapp`;
+    console.log('hola')
+    return this.http.post<any>(url, {}).pipe(
+      map((res) => {
+        return res;
       }),
       catchError((err) => {
         return this.handleError(err);

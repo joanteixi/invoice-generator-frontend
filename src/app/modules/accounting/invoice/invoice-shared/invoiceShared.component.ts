@@ -17,17 +17,17 @@ import { PdfService } from 'app/services/pdf.service';
 @Component({
   selector: 'app-invoice',
   standalone: true,
-  templateUrl: './invoiceView.component.html',
-  styleUrl: './invoiceView.component.scss',
+  templateUrl: './invoiceShared.component.html',
+  styleUrl: './invoiceShared.component.scss',
   encapsulation: ViewEncapsulation.None,
   imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatButtonModule, ReactiveFormsModule, MatInputModule, MatIconModule, MatSelectModule]
 
 })
-export class invoiceViewComponent {
+export class invoiceSharedComponent {
   @ViewChild('pdfContent', { static: false }) pdfContent!: ElementRef;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
-  id: number;
+  url_id: number;
   order: OrderModel;
   order_items: OrderItemModel[] = [];
 
@@ -46,10 +46,10 @@ export class invoiceViewComponent {
       .pipe(takeUntil(this._unsubscribeAll))
       .subscribe((ParamMap) => {
 
-        this.id = +ParamMap.get('id');
+        this.url_id = +ParamMap.get('url_id');
         // load context data
-        console.log('id number is ' + this.id)
-        this.apiService.getOrder(this.id)
+        console.log('id number is ' + this.url_id)
+        this.apiService.getOrderByUrl(this.url_id)
           .pipe(takeUntil(this._unsubscribeAll))
           .subscribe((order: OrderModel) => {
             // Get the contact
@@ -59,63 +59,18 @@ export class invoiceViewComponent {
       })
   }
 
+  exportToPDF() {
+    const content = this.pdfContent.nativeElement;
+    console.log(content)
+    this.pdfService.generatePDF(content, 'invoice');
+  }
 
   printInvoice() {
     window.print();
-    // const printContent = this.printableInvoice.nativeElement.innerHTML;
-    // const printWindow = window.open('', '_blank');
-    // printWindow.document.open();
-    // printWindow.document.write(`
-    //   <html>
-    //     <head>
-    //       <title>Printable Invoice</title>
-    //       <!-- Add any additional styles or meta tags here -->
-    //     </head>
-    //     <body>
-    //       ${printContent}
-    //     </body>
-    //   </html>
-    // `);
-    // printWindow.document.close();
-    // printWindow.print();
+    
   }
 
 
-
-  editInvoice(): void {
-    this.router.navigate(['/accounting/edit/' + this.id]);
-  }
-
-  returnToList(): void {
-    this.router.navigate(['/accounting']);
-  }
   
-  deleteOrder(): void {
-    this.apiService.deleteOrder(this.id).subscribe({
-      next: (response: any) => {
-        this.router.navigate(['/accounting']);
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-  sendWhatsapp(): void {
-    
 
-    this.apiService.sendWhatsapp(this.id).subscribe({
-      next: (response: any) => {
-        console.log(response)
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-    
-  }
-
-  exportToPDF() {
-    const content = this.pdfContent.nativeElement;
-    this.pdfService.generatePDF(content, 'invoice');
-  }
 }

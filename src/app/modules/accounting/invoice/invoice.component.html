@@ -29,7 +29,10 @@
                     </div>
                     <div [mat-sort-header]="'name'">Customer Name</div>
                     <div class="hidden sm:block" [mat-sort-header]="'total_base'">Total</div>
-
+                    
+                    <div class="" [mat-sort-header]="'created_by'">
+                        Creat per
+                    </div>
                     <div class="" [mat-sort-header]="'created_at'">
                         Date
                     </div>
@@ -51,6 +54,9 @@
                         </div>
                         <div class="hidden md:block">
                             {{ order.total_base | currency: 'EUR' }}
+                        </div>
+                        <div>
+                            {{order.created_by}}
                         </div>
                         <div>
                             {{order.created_at|date:'dd/MM/yyyy'}}

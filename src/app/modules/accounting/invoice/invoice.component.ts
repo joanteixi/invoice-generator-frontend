@@ -31,7 +31,7 @@ export class InvoiceComponent {
   isFiltered: boolean = false;
   filteredResults: any[];
   results: any[];
-  displayedColumns = ['id', 'customer_name', 'created_at', 'actions']
+  displayedColumns = ['id', 'customer_name', 'created_by','created_at',  'actions']
   dataSource: MatTableDataSource<any>;
   isLoading = false;
 

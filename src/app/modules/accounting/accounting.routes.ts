@@ -2,6 +2,7 @@ import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, Routes } from '@an
 import { InvoiceDetailComponent } from './invoice/invoice-detail/invoiceDetail.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { invoiceViewComponent } from './invoice/invoice-view/invoiceView.component';
+import { invoiceSharedComponent } from './invoice/invoice-shared/invoiceShared.component';
 
 
 const canDeactivateContactsDetails = (
@@ -46,5 +47,13 @@ export default [
     {
         path: 'view/:id',
         component: invoiceViewComponent
+    },
+    {
+        path: 'shared_version/:url_id',
+        component: invoiceSharedComponent,
+        data: {
+            layout: 'empty'
+        },
+
     }
 ] as Routes;
