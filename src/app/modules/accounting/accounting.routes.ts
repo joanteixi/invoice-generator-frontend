@@ -3,6 +3,8 @@ import { InvoiceDetailComponent } from './invoice/invoice-detail/invoiceDetail.c
 import { InvoiceComponent } from './invoice/invoice.component';
 import { invoiceViewComponent } from './invoice/invoice-view/invoiceView.component';
 import { invoiceSharedComponent } from './invoice/invoice-shared/invoiceShared.component';
+import { AuthGuard } from 'app/core/auth/guards/auth.guard';
+import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 
 
 const canDeactivateContactsDetails = (
@@ -36,19 +38,27 @@ const canDeactivateContactsDetails = (
 
 export default [
     {
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         path: '',
         component: InvoiceComponent
     },
 
     {
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         path: 'edit/:id',
         component: InvoiceDetailComponent,
     }, 
     {
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         path: 'view/:id',
         component: invoiceViewComponent
     },
     {
+        canActivate: [NoAuthGuard],
+        canActivateChild: [NoAuthGuard],
         path: 'shared_version/:url_id',
         component: invoiceSharedComponent,
         data: {

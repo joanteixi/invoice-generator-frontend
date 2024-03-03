@@ -81,8 +81,7 @@ export const appRoutes: Route[] = [
      // Accounting routes
      {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
+       
         component: LayoutComponent,
         resolve: {
             initialData: initialDataResolver
