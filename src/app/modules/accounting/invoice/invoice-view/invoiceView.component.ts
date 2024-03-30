@@ -62,25 +62,7 @@ export class invoiceViewComponent {
 
   printInvoice() {
     window.print();
-    // const printContent = this.printableInvoice.nativeElement.innerHTML;
-    // const printWindow = window.open('', '_blank');
-    // printWindow.document.open();
-    // printWindow.document.write(`
-    //   <html>
-    //     <head>
-    //       <title>Printable Invoice</title>
-    //       <!-- Add any additional styles or meta tags here -->
-    //     </head>
-    //     <body>
-    //       ${printContent}
-    //     </body>
-    //   </html>
-    // `);
-    // printWindow.document.close();
-    // printWindow.print();
   }
-
-
 
   editInvoice(): void {
     this.router.navigate(['/accounting/edit/' + this.id]);
@@ -101,8 +83,7 @@ export class invoiceViewComponent {
     })
   }
   sendWhatsapp(): void {
-    
-
+  
     this.apiService.sendWhatsapp(this.id).subscribe({
       next: (response: any) => {
         console.log(response)

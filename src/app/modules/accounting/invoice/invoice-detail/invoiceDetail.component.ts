@@ -30,7 +30,23 @@ export class InvoiceDetailComponent {
   order: OrderModel;
   concepts: ConceptModel[];
   payment_types: PaymentTypeModel[];
+  months: any[] = [
+    {id: 1, name: 'Gener'}, 
+    {id: 2, name: 'Febrer'},
+    {id: 3, name: 'Març'},
+    {id: 4, name: 'Abril'},
+    {id: 5, name: 'Maig'},
+    {id: 6, name: 'Juny'},
+    {id: 7, name: 'Juliol'},
+    {id: 8, name: 'Agost'},
+    {id: 9, name: 'Setembre'},
+    {id: 10, name: 'Octubre'},
+    {id: 11, name: 'Novembre'},
+    {id: 12, name: 'Desembre'}
+  ]
 
+  defaultYear: number = new Date().getFullYear();
+  
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -58,7 +74,6 @@ export class InvoiceDetailComponent {
             .subscribe((order: OrderModel) => {
               // Get the contact
               this.order = order;
-              console.log(order)
               // Patch values to the form
               this.invoiceForm.patchValue(order);
 
@@ -70,12 +85,15 @@ export class InvoiceDetailComponent {
               // Add order items from the received JSON
               order.order_items.forEach((item) => {
                 this.addItem();
+                console.log('item', item)
                 const itemFormGroup = this.order_items.at(this.order_items.length - 1) as FormGroup;
                 itemFormGroup.patchValue({
                   concept: item.concept_id,
                   quantity: item.quantity,
                   price: item.price,
-                  total_item: item.quantity * item.price
+                  total_item: item.quantity * item.price,
+                  month: item.month,
+                  year: item.year
                 });
               })
             })
@@ -102,6 +120,8 @@ export class InvoiceDetailComponent {
   addItem() {
     const itemGroup = this.formBuilder.group({
       concept: ['', Validators.required],
+      month: [null, Validators.required],
+      year: [null, Validators.required],
       quantity: ['', Validators.required],
       price: ['', Validators.required],
       total_item: ['']

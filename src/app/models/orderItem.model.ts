@@ -7,8 +7,9 @@ export class OrderItemModel extends Serializable {
     public concept_id: number;
     public quantity: number;
     public price: number;
+    public month: number;
+    public year: number;
    
-
     
     newModel(data: any): OrderItemModel {
         const dataParsed = new OrderItemModel(data);       

@@ -52,11 +52,26 @@
 
                     <div class="grid grid-cols-12 md:grip-cols-12 gap-x-1 mt-2">
                         <!-- Columns -->
-                        <div class="hidden md:block md:col-span-5 col-span-12 font-medium text-md text-secondary">CONCEPTE</div>
-                        <div class="hidden md:block md:col-span-2 col-span-6 font-medium text-md md:text-center text-secondary">PREU UNITAT</div>
-                        <div class="hidden md:block md:col-span-2 col-span-6 font-medium text-md md:text-center text-secondary">QUANTITAT</div>
-                        <div class="hidden md:block md:col-span-2 col-span-12 font-medium text-md md:text-center text-secondary">TOTAL</div>
-                        <div class="hidden md:block md:col-span-1 col-span-12 font-medium text-md md:text-center text-secondary">ACTION</div>
+                        <div class="hidden md:block md:col-span-3 col-span-12 font-medium text-md text-secondary">
+                            CONCEPTE</div>
+                        <div
+                            class="hidden md:block md:col-span-2 col-span-6 font-medium text-md md:text-center text-secondary">
+                            MES</div>
+                        <div
+                            class="hidden md:block md:col-span-1 col-span-6 font-medium text-md md:text-center text-secondary">
+                            ANY</div>
+                        <div
+                            class="hidden md:block md:col-span-1 col-span-6 font-medium text-md md:text-center text-secondary">
+                            QUANTITAT</div>
+                        <div
+                            class="hidden md:block md:col-span-2 col-span-6 font-medium text-md md:text-center text-secondary">
+                            PREU UNITAT</div>
+                        <div
+                            class="hidden md:block md:col-span-2 col-span-12 font-medium text-md md:text-center text-secondary">
+                            TOTAL</div>
+                        <div
+                            class="hidden md:block md:col-span-1 col-span-12 font-medium text-md md:text-center text-secondary">
+                            ACTION</div>
 
                         <!-- Divider -->
                         <div class="col-span-12 my-3 border-b"></div>
@@ -64,10 +79,10 @@
                         <!-- Item -->
                         <ng-container formArrayName="order_items">
                             <ng-container *ngFor="let item of order_items.controls; let i = index" [formGroupName]="i">
-                                <div class="col-span-12 md:col-span-5 font-medium">
-                                    <div class="ml-1 mb-2 md:hidden text-left">
-                                        Concepte
-                                    </div>
+
+                                <!-- Concept -->
+                                <div class="col-span-12 md:col-span-3 font-medium">
+
                                     <mat-form-field class="flex ml-2">
                                         <mat-select placeholder="Concept" formControlName="concept"
                                             (ngModelChange)="onConceptChange($event, i)">
@@ -78,27 +93,44 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                                <div class="col-span-6 md:col-span-2 self-center text-right">
-                                    <div class="ml-1 mb-2 md:hidden text-left">
-                                        Quantity
-                                    </div>
-                                    <mat-form-field class="flex ml-2">
+
+                                <!-- Month -->
+                                <div class="col-span-12  md:col-span-2 font-small">
+                                    <mat-form-field class="flex ml-1">
+                                        <mat-select placeholder="Mes" formControlName="month">
+                                            <mat-option *ngFor="let month of months" [value]="month.id">
+                                                {{month.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- Year -->
+                                <div class="col-span-12  md:col-span-1 font-medium">
+
+                                    <mat-form-field class="flex">
+                                        <input matInput formControlName="year" [value]="defaultYear">
+                                    </mat-form-field>
+                                </div>
+
+                                <!-- Quantitat -->
+                                <div class="col-span-6 md:col-span-1 self-center text-right">
+                                    <mat-form-field class="flex ml-1">
                                         <input matInput formControlName="quantity" (blur)="calculateTotal(i)">
                                     </mat-form-field>
                                 </div>
+
                                 <div class="col-span-6 md:col-span-2 self-center text-right">
-                                    <div class="ml-1  mb-2 md:hidden text-left">
-                                        Price
-                                    </div>
+
                                     <mat-form-field class="flex ml-2 ">
                                         <input class="highlight_input" matInput formControlName="price"
                                             (blur)="calculateTotal(i)">
                                     </mat-form-field>
                                 </div>
                                 <div class="col-span-12 md:col-span-2 self-center text-right">
-                                    <div class="ml-1 mb-2 md:hidden text-left">
+                                    <!-- <div class="ml-1 mb-2 md:hidden text-left">
                                         Total
-                                    </div>
+                                    </div> -->
                                     <mat-form-field class="flex ml-2">
                                         <input matInput formControlName="total_item">
                                     </mat-form-field>
@@ -139,8 +171,10 @@
                 <div
                     class=" relative flex flex-row items-ends flex-0 sm:items-center sm:justify-end py-8 px-6 md:px-8 border-b">
 
-                    <button class="w-1/2 mr-2 md:mb-0 md:w-1/4" mat-raised-button color="primary" (click)="returnToList()">Tornar</button>
-                    <button class="w-1/2 md:w-1/4" mat-raised-button color="primary" type="submit">Generar rebut</button>
+                    <button class="w-1/2 mr-2 md:mb-0 md:w-1/4" mat-raised-button color="primary"
+                        (click)="returnToList()">Tornar</button>
+                    <button class="w-1/2 md:w-1/4" mat-raised-button color="primary" type="submit">Generar
+                        rebut</button>
                 </div>
 
             </form>
